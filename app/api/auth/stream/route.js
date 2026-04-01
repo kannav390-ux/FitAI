@@ -1,27 +1,21 @@
-import OpenAI from "openai";
-
-const openai = new OpenAI();
+import { generateChatReply } from "@/lib/ai.server";
 
 export async function POST(req) {
-  const { prompt } = await req.json();
+  try {
+    const { prompt } = await req.json();
+    const text = await generateChatReply("You are a helpful fitness assistant.", prompt);
 
-  const stream = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    stream: true,
-    messages: [{ role: "user", content: prompt }],
-  });
+    const encoder = new TextEncoder();
 
-  const encoder = new TextEncoder();
-
-  return new Response(
-    new ReadableStream({
-      async start(controller) {
-        for await (const chunk of stream) {
-          const text = chunk.choices[0]?.delta?.content || "";
+    return new Response(
+      new ReadableStream({
+        start(controller) {
           controller.enqueue(encoder.encode(text));
-        }
-        controller.close();
-      },
-    })
-  );
+          controller.close();
+        },
+      })
+    );
+  } catch (err) {
+    return Response.json({ error: err.message }, { status: err.status || 500 });
+  }
 }

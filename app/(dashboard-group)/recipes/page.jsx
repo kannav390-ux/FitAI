@@ -3,8 +3,11 @@
 import { Filter } from "../../../components/recipes/Filter";
 import { Macro } from "../../../components/recipes/Macro";
 import { RecipeCard } from "../../../components/recipes/RecipeCard";
+import { useRouter } from "next/navigation";
 
 export default function RecipesPage() {
+  const router = useRouter();
+
   return (
     <div className="space-y-12">
 
@@ -40,7 +43,11 @@ export default function RecipesPage() {
               High-performance omega-3 fuel paired with seasonal citrus.
             </p>
 
-            <button className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-400 rounded text-sm font-bold">
+            <button
+              type="button"
+              onClick={() => window.alert("Opening Citrus-Glazed Wild Salmon recipe details...")}
+              className="mt-4 px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-400 rounded text-sm font-bold"
+            >
               VIEW RECIPE
             </button>
 
@@ -88,7 +95,11 @@ export default function RecipesPage() {
 
           </div>
 
-          <button className="mt-6 text-blue-400 text-xs uppercase flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => router.push("/meal-plan")}
+            className="mt-6 text-blue-400 text-xs uppercase flex items-center gap-2"
+          >
             MANAGE MEAL PLAN →
           </button>
 
