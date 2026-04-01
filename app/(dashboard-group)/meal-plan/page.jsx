@@ -103,7 +103,11 @@ export default function MealPlanPage() {
               Metabolic Acceleration
             </h2>
 
-            <button className="mt-3 px-6 py-2 bg-white text-black text-xs font-bold">
+            <button
+              type="button"
+              onClick={() => setStatusMessage("Metrics synced: glycogen, hydration, and macro trends updated.")}
+              className="mt-3 px-6 py-2 bg-white text-black text-xs font-bold"
+            >
               VIEW METRICS
             </button>
 
@@ -221,15 +225,15 @@ export default function MealPlanPage() {
     {/* LEFT ICON BUTTONS */}
     <div className="flex gap-2">
 
-      <button className="w-8 h-8 bg-[#192540] flex items-center justify-center rounded hover:bg-[#8eabff] hover:text-black transition">
+      <button type="button" onClick={() => setStatusMessage("Macro tuning preset applied.")} className="w-8 h-8 bg-[#192540] flex items-center justify-center rounded hover:bg-[#8eabff] hover:text-black transition">
         <span className="material-symbols-outlined text-sm">tune</span>
       </button>
 
-      <button className="w-8 h-8 bg-[#192540] flex items-center justify-center rounded hover:bg-[#8eabff] hover:text-black transition">
+      <button type="button" onClick={() => setStatusMessage("Calories recalculated for your selected meal protocol.")} className="w-8 h-8 bg-[#192540] flex items-center justify-center rounded hover:bg-[#8eabff] hover:text-black transition">
         <span className="material-symbols-outlined text-sm">calculate</span>
       </button>
 
-      <button className="w-8 h-8 bg-[#192540] flex items-center justify-center rounded hover:bg-[#8eabff] hover:text-black transition">
+      <button type="button" onClick={() => setStatusMessage("Connected to recovery and supplementation insights.")} className="w-8 h-8 bg-[#192540] flex items-center justify-center rounded hover:bg-[#8eabff] hover:text-black transition">
         <span className="material-symbols-outlined text-sm">hub</span>
       </button>
 
@@ -277,7 +281,7 @@ export default function MealPlanPage() {
   </p>
 
   {/* BUTTON (FIXED STYLE) */}
-  <button className="text-[11px] uppercase tracking-widest text-[#8eabff] font-bold flex items-center gap-2 hover:gap-3 transition-all">
+  <button type="button" onClick={() => setStatusMessage("Opened full protocol summary for this tactic.")} className="text-[11px] uppercase tracking-widest text-[#8eabff] font-bold flex items-center gap-2 hover:gap-3 transition-all">
 
     READ FULL PROTOCOL
 

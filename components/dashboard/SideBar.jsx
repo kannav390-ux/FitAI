@@ -56,7 +56,11 @@ export default function Sidebar() {
 
       {/* FOOTER */}
       <div className="mt-auto p-6">
-        <button className="w-full py-3 bg-gradient-to-r from-[#156aff] to-[#8eabff] text-white text-xs font-bold rounded-md shadow-lg">
+        <button
+          type="button"
+          onClick={() => window.alert("Upgrade flow coming soon. Billing portal will open here.")}
+          className="w-full py-3 bg-gradient-to-r from-[#156aff] to-[#8eabff] text-white text-xs font-bold rounded-md shadow-lg"
+        >
           UPGRADE TO PRO
         </button>
       </div>
