@@ -1,46 +1,86 @@
-import OpenAI from "openai";
+import { generateJSON } from "@/lib/ai.server";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+function buildFallbackSwaps(meal) {
+  return [
+    {
+      title: `Grilled Chicken + Brown Rice (${meal})`,
+      calories: "540",
+      protein: "42g",
+      carbs: "52g",
+      fats: "15g",
+    },
+    {
+      title: `Turkey Quinoa Bowl (${meal})`,
+      calories: "510",
+      protein: "39g",
+      carbs: "48g",
+      fats: "14g",
+    },
+    {
+      title: `Tofu Power Plate (${meal})`,
+      calories: "500",
+      protein: "35g",
+      carbs: "50g",
+      fats: "16g",
+    },
+  ];
+}
 
 export async function POST(req) {
-  try {
-    const { meal } = await req.json();
+  let meal = "Current Meal";
 
-    const prompt = `
+  try {
+    const body = await req.json();
+    meal = body?.meal;
+
+    if (!meal || typeof meal !== "string") {
+      return Response.json(
+        { error: "A valid meal description is required." },
+        { status: 400 }
+      );
+    }
+
+    const data = await generateJSON(`
 You are a professional sports nutritionist.
 
 Given this meal:
 ${meal}
 
-Suggest 3 alternative meals with:
-- similar calories
-- high protein
-- fitness optimized
+Suggest exactly 3 alternative meals that are fitness optimized and similar in calories.
 
-Return in JSON format:
-[
-  {
-    "title": "",
-    "calories": "",
-    "protein": "",
-    "carbs": "",
-    "fats": ""
-  }
-]
-`;
+Return strict JSON in this shape:
+{
+  "swaps": [
+    {
+      "title": "",
+      "calories": "",
+      "protein": "",
+      "carbs": "",
+      "fats": ""
+    }
+  ]
+}
+`);
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [{ role: "user", content: prompt }],
-    });
+    const swaps = Array.isArray(data?.swaps) ? data.swaps.slice(0, 3) : [];
 
-    const text = response.choices[0].message.content;
-
-    return Response.json({ result: text });
-
+    return Response.json({ swaps, source: "ai" });
   } catch (err) {
-    return Response.json({ error: err.message });
+    const message = err?.message || "Failed to generate meal swaps.";
+    const isQuotaError = err?.status === 429 || message.includes("429");
+
+    if (isQuotaError) {
+      return Response.json(
+        {
+          swaps: buildFallbackSwaps(meal),
+          source: "fallback",
+          warning:
+            "AI quota reached. Showing fallback swaps until billing/quota is restored.",
+        },
+        { status: 200 }
+      );
+    }
+
+    return Response.json({ error: message }, { status: 500 });
   }
 }
