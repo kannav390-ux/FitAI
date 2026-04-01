@@ -6,7 +6,7 @@ export default function Navbar() {
       <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
 
         <div className="text-2xl font-bold text-[#8eabff]">
-          Kinetic Core
+          FitAI
         </div>
 
         <div className="hidden md:flex gap-8 text-gray-400">

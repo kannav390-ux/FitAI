@@ -5,7 +5,7 @@ import ActivityChart from "@/components/dashboard/ActivityChart";
 import StatsCards from "@/components/dashboard/StatsCards";
 import WorkoutCard from "@/components/dashboard/WorkoutCard";
 import MealPlan from "@/components/dashboard/MealPlan";
-import { useEffect, useState } from "react";
+import BMICalculator from "@/components/dashboard/BMICalculator";
 export default function Dashboard() {
   return (
     <div className="animate-fadeIn">
@@ -20,6 +20,7 @@ export default function Dashboard() {
         </div>
 
         <div className="md:col-span-4 space-y-8">
+          <BMICalculator />
           <WorkoutCard />
           <MealPlan />
         </div>

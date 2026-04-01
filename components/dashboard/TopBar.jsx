@@ -4,7 +4,7 @@ export default function TopBar() {
       <header className="fixed top-0 left-0 w-full h-20 flex items-center justify-between px-10 bg-[#060e20]/80 backdrop-blur z-50">
   
         <h1 className="text-blue-400 font-bold">
-          KINETIC CORE
+          FITAI
         </h1>
   
         {/* CENTER NAV */}
