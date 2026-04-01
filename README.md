@@ -30,7 +30,7 @@ You should see `dev`, `build`, and `start` scripts. If not, `cd` into the folder
 Create a `.env.local` file with:
 
 ```bash
-OPENAI_API_KEY=your_openai_api_key
+GROQ_API_KEY=your_groq_api_key
 MONGO_URI=your_mongodb_connection_string
 NEXTAUTH_SECRET=your_nextauth_secret
 NEXTAUTH_URL=http://localhost:3000
