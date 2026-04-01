@@ -1,4 +1,4 @@
-import { generateJSON } from "@/lib/ai";
+import { generateJSON } from "@/lib/ai.server";
 
 export async function POST(req) {
   const { meal } = await req.json();
