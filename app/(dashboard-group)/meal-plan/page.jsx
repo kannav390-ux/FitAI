@@ -1,6 +1,6 @@
 "use client";
 
-
+import { useMemo, useState } from "react";
 import StatCard from "../../../components/meal/StatCard";
 import { GroceryPanel } from "../../../components/meal/GroceryPanel";
 import { Progress } from "../../../components/meal/Progress";
@@ -9,6 +9,26 @@ import SwapCard from "../../../components/meal/SwapCard";
 import { Macro } from "../../../components/recipes/Macro";
 
 export default function MealPlanPage() {
+  const meals = useMemo(() => [
+    {
+      title: "Citrus Wild Salmon",
+      description: "Grilled salmon with quinoa",
+      active: false,
+    },
+    {
+      title: "Herb Chicken Power Bowl",
+      description: "Chicken breast, brown rice, greens",
+      active: true,
+    },
+    {
+      title: "Lean Beef Recovery Plate",
+      description: "Lean beef, sweet potato, broccoli",
+      active: false,
+    },
+  ], []);
+
+  const [selectedMeal, setSelectedMeal] = useState(meals[0].title);
+
   return (
     <div className="space-y-12">
 
@@ -101,10 +121,17 @@ export default function MealPlanPage() {
 
           <h3 className="text-2xl font-bold italic">Today's Protocol</h3>
 
-          <MealCard />
-          <MealCard active />
-         
-          <MealCard />
+          {meals.map((meal) => (
+            <MealCard
+              key={meal.title}
+              title={meal.title}
+              description={meal.description}
+              active={meal.active}
+              onSwap={() => setSelectedMeal(meal.title)}
+            />
+          ))}
+
+          <SwapCard meal={selectedMeal} />
 
         </div>
 
