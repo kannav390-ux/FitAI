@@ -1,6 +1,6 @@
 "use client";
 
-export default function MealCard({ active, title, description, onSwap, onLog }) {
+export default function MealCard({ active, title, description, onSwap }) {
   return (
     <div
       className={`p-6 rounded flex gap-4 ${
@@ -26,11 +26,7 @@ export default function MealCard({ active, title, description, onSwap, onLog }) 
           <span className="material-symbols-outlined text-sm">sync</span>
           SWAP
         </button>
-        <button
-          type="button"
-          onClick={onLog}
-          className="flex items-center gap-2 px-4 py-2 bg-[#192540] text-white text-[10px] font-black tracking-widest uppercase rounded-sm hover:bg-white hover:text-black transition-all"
-        >
+        <button className="flex items-center gap-2 px-4 py-2 bg-[#192540] text-white text-[10px] font-black tracking-widest uppercase rounded-sm hover:bg-white hover:text-black transition-all">
           <span className="material-symbols-outlined text-sm">check</span>
           LOG
         </button>

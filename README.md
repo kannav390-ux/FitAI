@@ -36,4 +36,4 @@ NEXTAUTH_SECRET=your_nextauth_secret
 NEXTAUTH_URL=http://localhost:3000
 ```
 
-Without `GROQ_API_KEY`, AI meal swap/chat endpoints will fail.
+Without `OPENAI_API_KEY`, AI meal swap/chat endpoints will fail.
