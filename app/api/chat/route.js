@@ -1,32 +1,13 @@
-import OpenAI from "openai";
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+import { generateChatReply } from "@/lib/ai.server";
 
 export async function POST(req) {
   try {
     const { message } = await req.json();
 
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: "You are a fitness AI coach.",
-        },
-        {
-          role: "user",
-          content: message,
-        },
-      ],
-    });
+    const reply = await generateChatReply("You are a fitness AI coach.", message);
 
-    return Response.json({
-      reply: response.choices[0].message.content,
-    });
-
+    return Response.json({ reply });
   } catch (err) {
-    return Response.json({ error: err.message });
+    return Response.json({ error: err.message }, { status: err.status || 500 });
   }
 }

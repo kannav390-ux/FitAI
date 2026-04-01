@@ -8,7 +8,7 @@ export default function HeroSection() {
   
         <div className="relative z-10 max-w-xl">
           <div className="bg-primary text-black text-xs px-3 py-1 mb-6">
-            KINETIC CORE NOIR
+            FITAI NOIR
           </div>
   
           <h1 className="text-[64px] font-black leading-[0.9] tracking-[-1px]">
