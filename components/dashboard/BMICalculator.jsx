@@ -71,7 +71,6 @@ function getPlanForBMI(bmi) {
 export default function BMICalculator() {
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
-  const [saveStatus, setSaveStatus] = useState("");
 
   const bmi = useMemo(() => {
     const weightNum = Number(weight);
@@ -86,32 +85,6 @@ export default function BMICalculator() {
   }, [weight, height]);
 
   const plan = useMemo(() => getPlanForBMI(bmi), [bmi]);
-
-  const saveInputDetails = async () => {
-    if (!bmi || !plan) return;
-
-    const res = await fetch("/api/user/input", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: "bmi",
-        payload: {
-          weight: Number(weight),
-          height: Number(height),
-          bmi: Number(bmi.toFixed(1)),
-          category: plan.category,
-        },
-      }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      setSaveStatus(data.error || "Could not save input details.");
-      return;
-    }
-
-    setSaveStatus("BMI input details saved to your profile.");
-  };
 
   return (
     <section className="card space-y-5">
@@ -170,16 +143,6 @@ export default function BMICalculator() {
               ))}
             </ul>
           </div>
-
-          <button
-            type="button"
-            onClick={saveInputDetails}
-            className="w-full bg-[#8eabff] text-black py-2 rounded text-xs font-bold uppercase"
-          >
-            Save Input Details
-          </button>
-
-          {saveStatus && <p className="text-xs text-blue-300">{saveStatus}</p>}
         </div>
       ) : (
         <p className="text-sm text-gray-400">Enter weight and height to calculate BMI and get suggestions.</p>

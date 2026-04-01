@@ -1,6 +1,5 @@
 import { connectDB } from "@/lib/db";
 import User from "@/models/User";
-import AuthLog from "@/models/AuthLog";
 import { hashPassword } from "@/lib/security";
 
 export async function POST(req) {
@@ -17,12 +16,6 @@ export async function POST(req) {
     const existing = await User.findOne({ email: normalizedEmail });
 
     if (existing) {
-      await AuthLog.create({
-        email: normalizedEmail,
-        action: "signup",
-        status: "failed",
-        reason: "user_exists",
-      });
       return Response.json({ error: "User already exists." }, { status: 409 });
     }
 
@@ -39,13 +32,6 @@ export async function POST(req) {
           createdAt: new Date(),
         },
       ],
-    });
-
-    await AuthLog.create({
-      email: normalizedEmail,
-      action: "signup",
-      status: "success",
-      meta: { userId: user._id.toString() },
     });
 
     return Response.json({ ok: true, userId: user._id.toString() });

@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
 
   inputLogs: [
     {
-      type: { type: String, enum: ["signup", "login", "input"] },
+      type: { type: String, enum: ["signup", "login"] },
       payload: mongoose.Schema.Types.Mixed,
       createdAt: { type: Date, default: Date.now },
     },

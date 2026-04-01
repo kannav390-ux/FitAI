@@ -79,7 +79,9 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#060e20]" />
 
         <div className="relative z-10 max-w-lg">
-          <div className="bg-[#8eabff] text-black text-xs px-3 py-1 mb-6 inline-block">FITAI NOIR</div>
+          <div className="bg-[#8eabff] text-black text-xs px-3 py-1 mb-6 inline-block">
+            FITAI NOIR
+          </div>
 
           <h1 className="text-[64px] font-black leading-[0.9] tracking-[-1px]">
             RECLAIM YOUR <br />
