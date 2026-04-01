@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { getMealSwap } from "@/lib/ai";
 
-export default function SwapCard({ meal }) {
-  const [meals, setMeals] = useState([]);
+export default function SwapCard({ meal, onApplySwap }) {
+  const [swaps, setSwaps] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [warning, setWarning] = useState("");
@@ -18,7 +18,7 @@ export default function SwapCard({ meal }) {
 
     try {
       const result = await getMealSwap(meal);
-      setMeals(result.swaps || []);
+      setSwaps(result.swaps || []);
       if (result.warning) setWarning(result.warning);
     } catch (err) {
       const message = err?.message || "Swap failed. Please try again.";
@@ -58,7 +58,7 @@ export default function SwapCard({ meal }) {
       )}
 
       <div className="grid md:grid-cols-3 gap-6">
-        {meals.map((mealItem, i) => (
+        {swaps.map((mealItem, i) => (
           <div key={i} className="bg-[#060e20] p-4 rounded">
             <h5 className="text-sm font-bold">{mealItem.title}</h5>
 
@@ -69,7 +69,13 @@ export default function SwapCard({ meal }) {
               <p>{mealItem.fats} fats</p>
             </div>
 
-            <button className="mt-4 w-full bg-[#1f2b49] text-[#8eabff] text-xs py-2 rounded">
+            <button
+              onClick={() => {
+                onApplySwap(mealItem);
+                setSwaps([]); // clear swaps after applying
+              }}
+              className="mt-4 w-full bg-[#1f2b49] text-[#8eabff] text-xs py-2 rounded"
+            >
               APPLY SWAP
             </button>
           </div>

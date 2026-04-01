@@ -9,7 +9,7 @@ import SwapCard from "../../../components/meal/SwapCard";
 import { Macro } from "../../../components/recipes/Macro";
 
 export default function MealPlanPage() {
-  const meals = useMemo(() => [
+  const [meals, setMeals] = useState([
     {
       title: "Citrus Wild Salmon",
       description: "Grilled salmon with quinoa",
@@ -25,9 +25,25 @@ export default function MealPlanPage() {
       description: "Lean beef, sweet potato, broccoli",
       active: false,
     },
-  ], []);
-
+  ]);
   const [selectedMeal, setSelectedMeal] = useState(meals[0].title);
+
+  function applySwap(newMeal) {
+    setMeals((prevMeals) =>
+      prevMeals.map((meal) =>
+        meal.title === selectedMeal
+          ? {
+              ...meal,
+              title: newMeal.title,
+              description: `${newMeal.protein}g protein • ${newMeal.calories} kcal`,
+            }
+          : meal
+      )
+    );
+  
+    // 🔥 update selected meal to new one
+    setSelectedMeal(newMeal.title);
+  }
 
   return (
     <div className="space-y-12">
@@ -127,11 +143,23 @@ export default function MealPlanPage() {
               title={meal.title}
               description={meal.description}
               active={meal.active}
-              onSwap={() => setSelectedMeal(meal.title)}
+              onSwap={() => {
+  setSelectedMeal(meal.title);
+
+  setMeals((prev) =>
+    prev.map((m) => ({
+      ...m,
+      active: m.title === meal.title,
+    }))
+  );
+}}
             />
           ))}
 
-          <SwapCard meal={selectedMeal} />
+          <SwapCard 
+            meal={selectedMeal} 
+            onApplySwap={applySwap} 
+          />
 
         </div>
 
